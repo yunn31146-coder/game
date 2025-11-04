@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>大熊体育 - FFYL1.COM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            height: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* 顶部头部 */
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .logo-text p {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .announcement {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* 促销横幅 */
+        .banner {
+            margin: 12px 16px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-content {
+            flex: 1;
+            color: white;
+        }
+
+        .banner-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .banner-desc {
+            font-size: 12px;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+
+        .banner-btn {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .banner-image {
+            width: 120px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+        }
+
+        .banner-dots {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.5;
+        }
+
+        .dot.active {
+            opacity: 1;
+        }
+
+        .banner-notice {
+            margin: 0 16px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 用户信息栏 */
+        .user-section {
+            margin: 12px 16px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #5b21b6 100%);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .user-left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-profile {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .user-info {
+            color: white;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .user-info .user-name {
+            font-size: 13px;
+        }
+
+        .user-info .vip-badge {
+            position: absolute;
+            bottom: -2px;
+            left: -2px;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            color: white;
+            z-index: 1;
+        }
+
+        .balance {
+            color: white;
+        }
+
+        .balance-amount {
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+
+        .balance-amount span {
+            white-space: nowrap;
+        }
+
+        .refresh-btn {
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .refresh-icon {
+            width: 14px;
+            height: 14px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 8px;
+            padding: 6px 4px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 45px;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            font-size: 18px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        .action-btn.deposit .action-icon {
+            background: #f97316;
+            color: white;
+        }
+
+        .action-btn.withdraw .action-icon {
+            background: #a16207;
+            color: white;
+        }
+
+        .action-btn.vip .action-icon {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            color: white;
+        }
+
+        .action-btn.invite .action-icon {
+            background: #22c55e;
+            color: white;
+        }
+
+        .invite-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            width: 14px;
+            height: 14px;
+        }
+
+        .invite-grid-item {
+            width: 4px;
+            height: 4px;
+            border-radius: 1px;
+        }
+
+        .invite-grid-item:nth-child(1) { background: #ef4444; }
+        .invite-grid-item:nth-child(2) { background: #fbbf24; }
+        .invite-grid-item:nth-child(3) { background: #60a5fa; }
+        .invite-grid-item:nth-child(4) { background: #22c55e; }
+        .invite-grid-item:nth-child(5) { background: #ef4444; }
+        .invite-grid-item:nth-child(6) { background: #fbbf24; }
+        .invite-grid-item:nth-child(7) { background: #60a5fa; }
+        .invite-grid-item:nth-child(8) { background: #22c55e; }
+        .invite-grid-item:nth-child(9) { background: #8b5cf6; }
+
+        .action-text {
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        /* 通知栏 */
+        .notice-bar {
+            margin: 12px 16px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .hot-badge {
+            background: white;
+            color: #ef4444;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            display: flex;
+            gap: 12px;
+            margin: 0 16px;
+        }
+
+        /* 左侧分类 */
+        .categories {
+            width: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .category-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-text {
+            font-size: 10px;
+        }
+
+        /* 右侧游戏内容 */
+        .games-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .game-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .game-info {
+            padding: 12px;
+            color: white;
+        }
+
+        .game-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .game-subtitle {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+
+        .game-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+        }
+
+        .game-provider {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .provider-info {
+            color: white;
+        }
+
+        .provider-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .provider-subtitle {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .provider-image {
+            width: 80px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+        }
+
+        .provider-btn {
+            margin-top: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .maintenance-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-text {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <span>06:58</span>
+        <span>📶 📶 📶 📶 📶 🔋 57%</span>
+    </div>
+
+    <!-- 头部 -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo-icon">F</div>
+            <div class="logo-text">
+                <h1>大熊体育</h1>
+                <p>FFYL1.COM</p>
+            </div>
+        </div>
+        <div class="announcement">
+            <span>🔊</span>
+            <span>公告</span>
+        </div>
+    </div>
+
+    <!-- 促销横幅 -->
+    <div class="banner">
+        <div class="banner-content">
+            <div class="banner-title">邀请好友</div>
+            <div class="banner-desc">注册即送28彩金</div>
+            <div class="banner-desc">存款达标即送名额</div>
+            <button class="banner-btn">查看详情</button>
+        </div>
+        <div class="banner-image">🎮👑🐉</div>
+        <div class="banner-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- 横幅通知 -->
+    <div class="banner-notice">
+        <span>🔊</span>
+        <span>!(当前计算5月数据,6月正式开放入口)活动入口: APP→</span>
+    </div>
+
+    <!-- 用户信息栏 -->
+    <div class="user-section">
+        <div class="user-left">
+            <div class="user-profile">
+                <div class="avatar">👤</div>
+                <span class="vip-badge">VIP0</span>
+            </div>
+            <div class="user-info">
+                <div class="user-name">余额</div>
+                <div class="balance">
+                    <div class="balance-amount">
+                        <span>102938.54</span>
+                        <button class="refresh-btn">
+                            <span class="refresh-icon">🔄</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn deposit">
+                <span class="action-icon">💰</span>
+                <span class="action-text">存款</span>
+            </button>
+            <button class="action-btn withdraw">
+                <span class="action-icon">💳</span>
+                <span class="action-text">提现</span>
+            </button>
+            <button class="action-btn vip">
+                <span class="action-icon">👑</span>
+                <span class="action-text">VIP</span>
+            </button>
+            <button class="action-btn invite">
+                <span class="action-icon">📱</span>
+                <span class="action-text">邀请</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 左侧分类 -->
+        <div class="categories">
+            <button class="category-btn">
+                <span class="category-icon">🎮</span>
+                <span class="category-text">体育</span>
+            </button>
+            <button class="category-btn">
+                <span class="category-icon">👤</span>
+                <span class="category-text">真人</span>
+            </button>
+            <button class="category-btn">
+                <span class="category-icon">🎰</span>
+                <span class="category-text">电子</span>
+            </button>
+            <button class="category-btn">
+                <span class="category-icon">🎱</span>
+                <span class="category-text">彩票</span>
+            </button>
+            <button class="category-btn">
+                <span class="category-icon">♠️</span>
+                <span class="category-text">棋牌</span>
+            </button>
+           
+            <button class="category-btn">
+                <span class="category-icon">🐟</span>
+                <span class="category-text">捕鱼</span>
+            </button>
+           
+        </div>
+
+        <!-- 右侧游戏内容 -->
+        <div class="games-content">
+            <!-- 推荐游戏 -->
+            <div class="game-row">
+                <div class="game-card">
+                    <div class="game-badge">推荐</div>
+                    <div class="game-image">🀄 麻将胡了</div>
+                    <div class="game-info">
+                        <div class="game-title">麻将胡了</div>
+                        <div class="game-subtitle">MAHJONG WAYS</div>
+                        <span class="game-tag">金牌麻将 2.5万倍</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-badge">推荐</div>
+                    <div class="game-image">👸 黄金女王</div>
+                    <div class="game-info">
+                        <div class="game-title">黄金女王</div>
+                        <div class="game-subtitle">Queen OF BOUNTY</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 游戏提供商 -->
+            <div class="game-provider">
+                <div class="provider-info">
+                    <div class="provider-title">PG电子</div>
+                    <div class="provider-subtitle">PG SLOT GAME</div>
+                    <button class="provider-btn">进入游戏</button>
+                </div>
+                <div class="provider-image">⚔️ 🗡️</div>
+            </div>
+
+            <div class="game-provider" style="position: relative;">
+                <div class="maintenance-overlay">维护中</div>
+                <div class="provider-info">
+                    <div class="provider-title">CG电子</div>
+                    <div class="provider-subtitle">CG SLOT GAME</div>
+                    <button class="provider-btn">进入游戏</button>
+                </div>
+                <div class="provider-image">👹 ⚙️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon">▦</div>
+            <div class="nav-text">大厅</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🎰</div>
+            <div class="nav-text">投注</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🎧</div>
+            <div class="nav-text">客服</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">⬇️</div>
+            <div class="nav-text">优惠</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-text">我的</div>
+        </div>
+    </div>
+</body>
+</html>
